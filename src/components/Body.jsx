@@ -4,9 +4,13 @@ import { Outlet } from 'react-router-dom'
 
 const Body = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <NavBar />
-      <Outlet></Outlet>
+
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+
       <Footer />
     </div>
   )
