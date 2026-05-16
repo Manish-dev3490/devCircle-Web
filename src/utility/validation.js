@@ -2,7 +2,6 @@ import validator from "validator";
 
 function dataValidation(email, password) {
 
-    console.log("i am doing data validation ");
     
   if (!validator.isEmail(email)) {
 
