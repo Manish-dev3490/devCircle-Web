@@ -5,9 +5,11 @@ const Feed = () => {
   const userData = useSelector((store) => store.userSlice);
 
   if (!userData) return null;
+  console.log("i am inside feed");
+  
 
   return (
-    <div>Feed</div>
+    <div>I am feed </div>
   );
 };
 

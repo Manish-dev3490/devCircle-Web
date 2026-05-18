@@ -3,7 +3,8 @@ import axios from "axios";
 import dataValidation from "../utils/validation";
 import { useDispatch } from "react-redux";
 import { addUser } from '../utils/userSlice'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { BASE_URL } from "../utils/constant";
 
 const Login = () => {
   const [email, setEmail] = useState("manish123@gmail.com");
@@ -11,7 +12,9 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
+
 
   const handleSubmit = async (e) => {
     try {
@@ -22,7 +25,7 @@ const Login = () => {
 
       dataValidation(email, password);
 
-      const response = await axios.post("http://localhost:3000/login", {
+      const response = await axios.post(BASE_URL + "/login", {
         email,
         password
       }, {
@@ -32,7 +35,7 @@ const Login = () => {
 
       if (response) dispatch(addUser(response.data));
       navigate('/');
-      
+
     } catch (error) {
       if (error.field === "email") {
         setEmailError(error.message);
@@ -41,6 +44,8 @@ const Login = () => {
       }
     }
   };
+
+
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-base-100  rounded-2xl shadow-xl p-8">

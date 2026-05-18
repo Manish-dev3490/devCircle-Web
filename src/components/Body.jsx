@@ -5,16 +5,18 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../utils/userSlice'
 import { useEffect } from 'react'
+import { BASE_URL } from '../utils/constant'
 
 const Body = () => {
   const dispatch = useDispatch();
-  const navigate=useNavigate();
-  const userData=useSelector((store)=>store?.userSlice);
+  const navigate = useNavigate();
+  const userData = useSelector((store) => store?.userSlice);
+  console.log("i am inside body");
 
   const fetchUser = async () => {
-    if(userData)return;
+    if (userData) return;
     try {
-      const response = await axios.get("http://localhost:3000/profile/view", { withCredentials: true });
+      const response = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
       dispatch(addUser(response.data));
     }
     catch (error) {
