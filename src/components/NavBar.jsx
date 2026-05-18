@@ -14,7 +14,7 @@ function NavBar() {
     const handleLogOut = async () => {
 
         try {
-            const response = await axios.post(BASE_URL + "/logout",{} ,{ withCredentials: true });
+            const response = await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
             dispatch(removeUser())
             navigate('/login');
             console.log(response);
@@ -47,7 +47,7 @@ function NavBar() {
                 )}
 
                 {/* Avatar Dropdown */}
-                <div className="dropdown dropdown-end">
+                {userInformation ? <div className="dropdown dropdown-end">
 
                     <div
                         tabIndex={0}
@@ -83,7 +83,8 @@ function NavBar() {
                             <a>Logout</a>
                         </li>
                     </ul>
-                </div>
+                </div> : ''}
+
             </div>
         </div>
     );
