@@ -3,13 +3,15 @@ import axios from "axios";
 import dataValidation from "../utils/validation";
 import { useDispatch } from "react-redux";
 import { addUser } from '../utils/userSlice'
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("manish123@gmail.com");
+  const [password, setPassword] = useState("manishKumar123@");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
+  const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     try {
@@ -22,13 +24,15 @@ const Login = () => {
 
       const response = await axios.post("http://localhost:3000/login", {
         email,
-        password,
+        password
       }, {
         withCredentials: true
       });
 
 
       if (response) dispatch(addUser(response.data));
+      navigate('/');
+      
     } catch (error) {
       if (error.field === "email") {
         setEmailError(error.message);
