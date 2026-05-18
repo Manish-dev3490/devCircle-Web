@@ -1,12 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
-import dataValidation from "../utility/validation";
+import dataValidation from "../utils/validation";
+import { useDispatch } from "react-redux";
+import { addUser } from '../utils/userSlice'
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     try {
@@ -24,7 +27,8 @@ const Login = () => {
         withCredentials: true
       });
 
-      console.log(response.data);
+
+      if (response) dispatch(addUser(response.data));
     } catch (error) {
       if (error.field === "email") {
         setEmailError(error.message);
