@@ -8,7 +8,7 @@ import Feed from "./Feed";
 import { Provider } from "react-redux";
 import store from "../utils/store";
 import Connections from "./Connections";
-import Requests from "./requests";
+import Requests from "./Requests";
 
 export default function App() {
 
