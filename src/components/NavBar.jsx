@@ -14,7 +14,7 @@ function NavBar() {
     const handleLogOut = async () => {
 
         try {
-             await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+            await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
             dispatch(removeUser())
             navigate('/login');
         }
@@ -76,6 +76,21 @@ function NavBar() {
                             </Link>
                         </li>
 
+
+                        <li>
+                            <Link to='/connections' className="justify-between">
+                                Friends
+                                <span className="badge">Connections</span>
+                            </Link>
+                        </li>
+
+
+                        <li>
+                            <Link to='/requests' className="justify-between">
+                                Request
+                                <span className="badge">Received</span>
+                            </Link>
+                        </li>
 
 
                         <li onClick={handleLogOut}>

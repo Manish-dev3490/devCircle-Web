@@ -38,7 +38,7 @@ const Feed = () => {
   }
 
   return (
-    <div className="flex flex-row gap-8 mx-4 ">
+    <div className="flex flex-row flex-wrap gap-8 mx-4 ">
       {feedData.map((data) => (
         <UserCard key={data._id} feedData={data} />
       ))}
