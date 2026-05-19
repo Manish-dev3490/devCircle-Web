@@ -25,7 +25,7 @@ function NavBar() {
     }
 
     return (
-        <div className="navbar bg-base-100 shadow-sm px-4">
+        <div className="navbar bg-base-200 shadow-sm px-4">
 
             {/* Left Side */}
             <div className="flex-1">

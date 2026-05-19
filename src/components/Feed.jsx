@@ -1,15 +1,48 @@
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../utils/constant";
+import { addFeed } from "../utils/feedSlice";
+import { useEffect } from "react";
+import UserCard from "./userCard";
 
 const Feed = () => {
+  const dispatch = useDispatch();
 
-  const userData = useSelector((store) => store.userSlice);
+  const feedData = useSelector((store) => store.feedSlice);
 
-  if (!userData) return null;
-  console.log("i am inside feed");
-  
+  const getFeed = async () => {
+    try {
+      const feed = await axios.get(
+        BASE_URL + "/user/feed",
+        {
+          withCredentials: true,
+        }
+      );
+
+      dispatch(addFeed(feed.data));
+    } catch (error) {
+      console.log(error + "erere hai");
+    }
+  };
+
+  useEffect(() => {
+    getFeed();
+  }, []);
+
+  if (!feedData) {
+    return (
+      <div className="flex justify-center mt-10">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
-    <div>I am feed </div>
+    <div className="flex flex-row gap-8 mx-4 ">
+      {feedData.map((data) => (
+        <UserCard key={data._id} feedData={data} />
+      ))}
+    </div>
   );
 };
 
