@@ -29,9 +29,9 @@ function NavBar() {
 
             {/* Left Side */}
             <div className="flex-1">
-                <Link to='/' className="btn btn-ghost text-xl">
+                {userInformation && <Link to='/' className="btn btn-ghost text-xl">
                     🧑🏻‍💻 Dev-Circle
-                </Link >
+                </Link >}
             </div>
 
             {/* Right Side */}

@@ -3,7 +3,7 @@ import axios from "axios";
 import dataValidation from "../utils/validation";
 import { useDispatch } from "react-redux";
 import { addUser } from '../utils/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BASE_URL } from "../utils/constant";
 
 const Login = () => {
@@ -113,9 +113,11 @@ const Login = () => {
         {/* Signup Link */}
         <p className="text-center mt-6 text-gray-600">
           If you don't have an account?{" "}
-          <span className="text-blue-600 font-semibold cursor-pointer hover:underline">
+          <Link to='/signup'>
+          <span  className="text-blue-600 font-semibold cursor-pointer hover:underline">
             Signup here
           </span>
+          </Link>
         </p>
       </div>
     </div>
