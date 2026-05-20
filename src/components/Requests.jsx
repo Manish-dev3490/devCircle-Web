@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequest } from "../utils/requests";
+import { addRequest,removeRequest } from "../utils/requests";
 
 const Requests = () => {
 
@@ -32,6 +32,20 @@ const Requests = () => {
 
     }
   };
+
+  const handleRequest = async (status, _id) => {
+    try {
+      const response = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, { withCredentials: true });
+
+      dispatch(removeRequest(_id));
+      console.log(response);
+
+    }
+    catch (error) {
+      console.log(error.response);
+
+    }
+  }
 
   useEffect(() => {
 
@@ -139,11 +153,11 @@ const Requests = () => {
                 {/* Right Section */}
                 <div className="flex gap-3">
 
-                  <button className="btn btn-success btn-sm">
+                  <button onClick={() => handleRequest("accepted", request._id)} className="btn btn-success btn-sm px-4">
                     Accept
                   </button>
 
-                  <button className="btn btn-error btn-sm">
+                  <button onClick={() => handleRequest("rejected", request._id)} className="btn btn-error btn-sm px-4">
                     Reject
                   </button>
 

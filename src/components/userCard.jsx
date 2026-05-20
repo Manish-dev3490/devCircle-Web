@@ -3,7 +3,7 @@ const UserCard = (props) => {
     const {firstName,lastName,age,photo}=props.feedData
 
     return (
-        <div className="card bg-base-300 w-60 shadow-sm">
+        <div className="card bg-slate-800 w-60 shadow-sm my-8 mx-8 ">
             <figure>
                 <img
                     src={photo}
