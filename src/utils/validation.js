@@ -85,4 +85,170 @@ export function validateData(firstName, lastName, age, photo) {
 
     return true;
 }
+
+
+export const validateSignUpData = ({
+  firstName,
+  lastName,
+  age,
+  gender,
+  email,
+  password,
+  photo,
+}) => {
+
+  // First Name
+  if (!firstName.trim()) {
+
+    throw {
+      field: "firstName",
+      message: "First name is required",
+    };
+
+  }
+
+  if (!validator.isLength(firstName, { min: 3, max: 20 })) {
+
+    throw {
+      field: "firstName",
+      message: "First name must be between 3 to 20 characters",
+    };
+
+  }
+
+  // Last Name
+  if (!lastName.trim()) {
+
+    throw {
+      field: "lastName",
+      message: "Last name is required",
+    };
+
+  }
+
+  if (!validator.isLength(lastName, { min: 3, max: 20 })) {
+
+    throw {
+      field: "lastName",
+      message: "Last name must be between 3 to 20 characters",
+    };
+
+  }
+
+  // Age
+  if (!age) {
+
+    throw {
+      field: "age",
+      message: "Age is required",
+    };
+
+  }
+
+  if (!validator.isNumeric(age.toString())) {
+
+    throw {
+      field: "age",
+      message: "Age must be a number",
+    };
+
+  }
+
+  if (age < 18 || age > 80) {
+
+    throw {
+      field: "age",
+      message: "Age must be between 18 and 80",
+    };
+
+  }
+
+  // Gender
+  if (!gender) {
+
+    throw {
+      field: "gender",
+      message: "Gender is required",
+    };
+
+  }
+
+  if (!["male", "female", "other"].includes(gender)) {
+
+    throw {
+      field: "gender",
+      message: "Invalid gender selected",
+    };
+
+  }
+
+  // Email
+  if (!email.trim()) {
+
+    throw {
+      field: "email",
+      message: "Email is required",
+    };
+
+  }
+
+  if (!validator.isEmail(email)) {
+
+    throw {
+      field: "email",
+      message: "Invalid email format",
+    };
+
+  }
+
+  // Password
+  if (!password.trim()) {
+
+    throw {
+      field: "password",
+      message: "Password is required",
+    };
+
+  }
+
+  if (
+    !validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+  ) {
+
+    throw {
+      field: "password",
+      message:
+        "Password must contain uppercase, lowercase, number and symbol",
+    };
+
+  }
+
+  // Photo URL
+  if (!photo.trim()) {
+
+    throw {
+      field: "photo",
+      message: "Photo URL is required",
+    };
+
+  }
+
+  if (!validator.isURL(photo)) {
+
+    throw {
+      field: "photo",
+      message: "Invalid photo URL",
+    };
+
+  }
+
+  return true;
+};
+
 export default dataValidation;
