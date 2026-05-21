@@ -2,7 +2,7 @@ import validator from "validator";
 
 function dataValidation(email, password) {
 
-  if (email.length === 0 ) throw {
+  if (email.length === 0) throw {
     field: "email",
     message: "your email input is empty"
   };
@@ -33,68 +33,66 @@ function dataValidation(email, password) {
 
 export function validateData(firstName, lastName, age, photo) {
 
-    // First Name
-    if (firstName.length < 3 || firstName.length > 50) {
+  // First Name
+  if (firstName.length < 3 || firstName.length > 50) {
 
-        const error = new Error(
-            "First name must be between 3 and 50 characters"
-        );
+    const error = new Error(
+      "First name must be between 3 and 50 characters"
+    );
 
-        error.field = "firstName";
+    error.field = "firstName";
 
-        throw error;
-    }
+    throw error;
+  }
 
-    // Last Name
-    if (lastName.length < 3 || lastName.length > 50) {
+  // Last Name
+  if (lastName.length < 3 || lastName.length > 50) {
 
-        const error = new Error(
-            "Last name must be between 3 and 50 characters"
-        );
+    const error = new Error(
+      "Last name must be between 3 and 50 characters"
+    );
 
-        error.field = "lastName";
+    error.field = "lastName";
 
-        throw error;
-    }
+    throw error;
+  }
 
-    // Age
-    if (age < 18 || age > 80) {
+  // Age
+  if (age < 18 || age > 80) {
 
-        const error = new Error(
-            "Age must be between 18 and 80"
-        );
+    const error = new Error(
+      "Age must be between 18 and 80"
+    );
 
-        error.field = "age";
+    error.field = "age";
 
-        throw error;
-    }
+    throw error;
+  }
 
-    // Photo URL
-    const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))/i;
+  // Photo URL
+  const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))/i;
 
-    if (!urlPattern.test(photo)) {
+  if (!urlPattern.test(photo)) {
 
-        const error = new Error(
-            "Please enter a valid image URL"
-        );
+    const error = new Error(
+      "Please enter a valid image URL"
+    );
 
-        error.field = "photo";
+    error.field = "photo";
 
-        throw error;
-    }
+    throw error;
+  }
 
-    return true;
+  return true;
 }
 
 
 export const validateSignUpData = ({
   firstName,
   lastName,
-  age,
-  gender,
   email,
   password,
-  photo,
+
 }) => {
 
   // First Name
@@ -135,52 +133,6 @@ export const validateSignUpData = ({
 
   }
 
-  // Age
-  if (!age) {
-
-    throw {
-      field: "age",
-      message: "Age is required",
-    };
-
-  }
-
-  if (!validator.isNumeric(age.toString())) {
-
-    throw {
-      field: "age",
-      message: "Age must be a number",
-    };
-
-  }
-
-  if (age < 18 || age > 80) {
-
-    throw {
-      field: "age",
-      message: "Age must be between 18 and 80",
-    };
-
-  }
-
-  // Gender
-  if (!gender) {
-
-    throw {
-      field: "gender",
-      message: "Gender is required",
-    };
-
-  }
-
-  if (!["male", "female", "other"].includes(gender)) {
-
-    throw {
-      field: "gender",
-      message: "Invalid gender selected",
-    };
-
-  }
 
   // Email
   if (!email.trim()) {
@@ -225,25 +177,6 @@ export const validateSignUpData = ({
       field: "password",
       message:
         "Password must contain uppercase, lowercase, number and symbol",
-    };
-
-  }
-
-  // Photo URL
-  if (!photo.trim()) {
-
-    throw {
-      field: "photo",
-      message: "Photo URL is required",
-    };
-
-  }
-
-  if (!validator.isURL(photo)) {
-
-    throw {
-      field: "photo",
-      message: "Invalid photo URL",
     };
 
   }
