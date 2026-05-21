@@ -3,42 +3,82 @@ import { BASE_URL } from "../utils/constant";
 import { useDispatch } from "react-redux";
 import { removeUserFromFeed } from "../utils/feedSlice";
 
-const UserCard = (props) => {
-    const { firstName, lastName, age, photo, _id } = props.feedData;
-    const dispatch = useDispatch();
+const UserCard = ({ feedData }) => {
+  const {
+    firstName,
+    lastName,
+    age,
+    photo,
+    _id,
+  } = feedData;
 
-    const sendConnection = async (_id, status) => {
-        try {
-            const response = await axios.post(BASE_URL + "/request/send/" + status + "/" + _id, {}, { withCredentials: true });
-            dispatch(removeUserFromFeed(_id));
-            console.log(response);
+  const dispatch = useDispatch();
 
-
+  const sendConnection = async (_id, status) => {
+    try {
+      await axios.post(
+        BASE_URL + "/request/send/" + status + "/" + _id,
+        {},
+        {
+          withCredentials: true,
         }
-        catch (error) {
-            console.log(error)
-        }
+      );
+
+      dispatch(removeUserFromFeed(_id));
+
+    } catch (error) {
+      console.log(error);
     }
+  };
 
+  return (
+    <div className="card bg-slate-800 w-60 shadow-xl my-6 mx-6 overflow-hidden">
 
-    return (
-        <div className="card bg-slate-800 w-60 shadow-sm my-8 mx-8 ">
-            <figure>
-                <img
-                    src={photo}
-                    alt="Shoes" />
-            </figure>
-            <div className="card-body">
-                <h2 className="card-title">{firstName + " " + lastName}</h2>
-                <p>{age}</p>
-                <div className="card-actions justify-end">
-                    <button className="btn px-4" onClick={() => sendConnection(_id, "ignored")}>Ignored</button>
-                    <button className="btn bg-orange-400 px-6" onClick={() => sendConnection(_id, "intrested")}>Intrested</button>
+      {/* Image */}
+      <figure className="w-full h-64 overflow-hidden">
+        <img
+          src={photo}
+          alt={firstName}
+          className="w-full h-full object-cover"
+        />
+      </figure>
 
-                </div>
-            </div>
+      {/* Content */}
+      <div className="card-body p-4">
+
+        <h2 className="card-title text-lg text-white">
+          {firstName} {lastName}
+        </h2>
+
+        <p className="text-sm text-gray-300">
+          Age: {age}
+        </p>
+
+        <div className="card-actions justify-between mt-3">
+
+          <button
+            className="btn btn-sm"
+            onClick={() =>
+              sendConnection(_id, "ignored")
+            }
+          >
+            Ignore
+          </button>
+
+          <button
+            className="btn btn-sm bg-orange-400 border-none hover:bg-orange-500"
+            onClick={() =>
+              sendConnection(_id, "interested")
+            }
+          >
+            Interested
+          </button>
+
         </div>
-    )
-}
 
-export default UserCard
+      </div>
+    </div>
+  );
+};
+
+export default UserCard;
