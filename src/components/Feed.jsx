@@ -60,7 +60,7 @@ const Feed = () => {
   }
   return (
     <div className="flex flex-row bg-base-300 flex-wrap gap-8 mx-10  my-6">
-      {feedData.map((data) => (
+      {Array.isArray(feedData) && feedData.map((data) => (
 
         <UserCard key={data._id} feedData={data} />
       ))}
