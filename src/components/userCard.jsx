@@ -27,7 +27,7 @@ const UserCard = ({ feedData }) => {
       dispatch(removeUserFromFeed(_id));
 
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -68,7 +68,7 @@ const UserCard = ({ feedData }) => {
           <button
             className="btn btn-sm bg-orange-400 border-none hover:bg-orange-500"
             onClick={() =>
-              sendConnection(_id, "interested")
+              sendConnection(_id, "intrested")
             }
           >
             Interested
