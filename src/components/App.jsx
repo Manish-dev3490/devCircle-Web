@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import store from "../utils/store";
 import Connections from "./Connections";
 import Requests from "./Requests";
+import AI_model from "./AI_model";
 
 export default function App() {
 
@@ -33,6 +34,7 @@ export default function App() {
 
 
             <Route path="profile" element={<Profile />} />
+            <Route path="ai-model" element={<AI_model/>} />
 
           </Route>
 

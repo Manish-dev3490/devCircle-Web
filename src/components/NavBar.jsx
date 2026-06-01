@@ -93,6 +93,13 @@ function NavBar() {
                         </li>
 
 
+                         <li>
+                            <Link to='/ai-model' className="justify-between">
+                                Ask to Meta-AI
+                            </Link>
+                        </li>
+
+
                         <li onClick={handleLogOut}>
                             <a>Logout</a>
                         </li>
