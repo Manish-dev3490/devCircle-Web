@@ -50,12 +50,10 @@ const UserDetail = ({ data }) => {
             <div className="flex gap-3">
 
                 <button className="btn bg-base-300 btn-sm px-4 mx-4  py-4">
-                    Message
+                    Chat
                 </button>
 
-                <button className="btn btn-outline btn-sm mx-4">
-                    Remove
-                </button>
+                
 
             </div>
 
