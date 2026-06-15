@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 
@@ -7,7 +8,8 @@ const UserDetail = ({ data }) => {
         firstName,
         lastName,
         age,
-        photo
+        photo,
+        _id
     } = data;
 
     return (
@@ -49,11 +51,12 @@ const UserDetail = ({ data }) => {
             {/* Right Section */}
             <div className="flex gap-3">
 
-                <button className="btn bg-base-300 btn-sm px-4 mx-4  py-4">
-                    Chat
-                </button>
+                <Link to={`/chat/${_id}`}>
+                    <button className="btn bg-base-300 btn-sm px-4 mx-4  py-4">
+                        Chat
+                    </button>
+                </Link>
 
-                
 
             </div>
 

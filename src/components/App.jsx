@@ -10,6 +10,7 @@ import store from "../utils/store";
 import Connections from "./Connections";
 import Requests from "./Requests";
 import AI_model from "./AI_model";
+import Chat from "./Chat"
 
 export default function App() {
 
@@ -34,7 +35,9 @@ export default function App() {
 
 
             <Route path="profile" element={<Profile />} />
-            <Route path="ai-model" element={<AI_model/>} />
+            <Route path="ai-model" element={<AI_model />} />
+            <Route path="/chat/:id" element={<Chat />} />
+
 
           </Route>
 
