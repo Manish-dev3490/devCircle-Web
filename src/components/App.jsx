@@ -36,7 +36,7 @@ export default function App() {
 
             <Route path="profile" element={<Profile />} />
             <Route path="ai-model" element={<AI_model />} />
-            <Route path="/chat/:id" element={<Chat />} />
+            <Route path="/chat/:toUserId" element={<Chat />} />
 
 
           </Route>
