@@ -1,8 +1,18 @@
+import { useEffect } from "react";
+import { createSocketConnection } from "../utils/socket";
+
 const Chat = () => {
+
+  useEffect(() => {
+    const socket = createSocketConnection();
+    socket.on("connect", () => {
+      console.log("Connected:", socket.id);
+    });
+  }, [])
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
       <div className="w-full max-w-md h-[550px] bg-base-100 rounded-2xl shadow-xl flex flex-col overflow-hidden">
-        
+
         {/* Header */}
         <div className="bg-blue-600 text-white text-center py-4 font-semibold text-lg">
           Chat
