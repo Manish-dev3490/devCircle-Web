@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { BASE_URL } from "../utils/constant";
+import axios from "axios";
 
 const Chat = () => {
   const [inputMsgVal, setInputMsgVal] = useState("");
@@ -27,6 +29,27 @@ const Chat = () => {
     setInputMsgVal("");
   };
 
+  const fetchChat = async () => {
+    const chat = await axios.get(BASE_URL + "/chat/" + toUserId, {
+      withCredentials: true,
+    });
+
+    const chatMessages = chat?.data?.messages?.map((data) => {
+      const { senderId, text } = data;
+      return {
+        firstName: senderId?.firstName,
+        lastName: senderId?.lastName,
+        text: text,
+      };
+    });
+
+    setMessages(chatMessages);
+  };
+
+  useEffect(() => {
+    fetchChat();
+  }, []);
+
   useEffect(() => {
     if (!userId || !toUserId) return;
 
@@ -46,7 +69,7 @@ const Chat = () => {
 
     socket.on("new-message", ({ firstName, text }) => {
       console.log(text);
-      
+
       setMessages((prev) => [
         ...prev,
         {
@@ -65,7 +88,6 @@ const Chat = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
       <div className="w-full max-w-md h-[550px] bg-base-100 rounded-2xl shadow-xl flex flex-col overflow-hidden">
-        
         {/* Header */}
         <div className="bg-blue-600 text-white text-center py-4 font-semibold text-lg">
           Chat
@@ -74,20 +96,15 @@ const Chat = () => {
         {/* Messages */}
         <div className="flex-1 p-4 overflow-y-auto">
           {messages.length === 0 ? (
-            <p className="text-center text-gray-500">
-              No messages yet
-            </p>
+            <p className="text-center text-gray-500">No messages yet</p>
           ) : (
             messages.map((msg, index) => (
-              <div
-                key={index}
-                className="mb-3 p-2 rounded-lg bg-gray-100"
-              >
+              <div key={index} className="mb-3 p-2 rounded-lg bg-gray-100">
                 <p className="font-semibold text-blue-600">
-                  {msg.firstName}
+                  {msg.firstName + " " + msg.lastName}
                 </p>
 
-                <p className=" text-blue-600">{msg.text}</p>
+                <p className=" text-black">{msg.text}</p>
               </div>
             ))
           )}

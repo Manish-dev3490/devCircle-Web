@@ -13,18 +13,21 @@ const Body = () => {
   const userData = useSelector((store) => store?.userSlice);
 
   const fetchUser = async () => {
-    if (userData) return;
-    try {
-      const response = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
-      dispatch(addUser(response.data));
-      navigate('/')
-    }
-    catch(error) {
-      console.log(error.response);
-      
-      navigate('/login')
-    }
+  if (userData) return;
+
+  try {
+    const response = await axios.get(
+      BASE_URL + "/profile/view",
+      { withCredentials: true }
+    );
+
+    dispatch(addUser(response.data));
+  } catch (error) {
+    console.log(error.message);
+    
+    navigate("/login");
   }
+};
 
   useEffect(() => {
     fetchUser()
