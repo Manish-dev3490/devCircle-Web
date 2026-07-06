@@ -1,1 +1,1 @@
-export const BASE_URL="https://devcircle-backend-aehz.onrender.com/";
+export const BASE_URL="https://devcircle-backend-aehz.onrender.com";
