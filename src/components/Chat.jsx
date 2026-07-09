@@ -57,9 +57,17 @@ const Chat = () => {
 
     socket.connect();
 
+
+
     socket.on("connect", () => {
-      console.log("Connected:", socket.id);
+      console.log("✅ Connected", socket.id);
     });
+
+    socket.on("connect_error", (err) => {
+      console.log("❌ Connect Error:", err.message);
+      console.log(err);
+    });
+
 
     socket.emit("join-chat", {
       firstName: userDetail.firstName,
