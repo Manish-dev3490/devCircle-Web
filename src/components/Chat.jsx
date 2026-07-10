@@ -8,6 +8,7 @@ import axios from "axios";
 const Chat = () => {
   const [inputMsgVal, setInputMsgVal] = useState("");
   const [messages, setMessages] = useState([]);
+  const [typingUser, setTypingUser] = useState("");
 
   const { toUserId } = useParams();
   const userDetail = useSelector((store) => store?.userSlice);
@@ -27,6 +28,18 @@ const Chat = () => {
     });
 
     setInputMsgVal("");
+  };
+
+  const typingMsg = (value) => {
+    if (!value.trim()) return;
+
+    const socket = createSocketConnection();
+
+    socket.emit("typing-message", {
+      _id: userId,
+      firstName: userDetail.firstName,
+      toUserId,
+    });
   };
 
   const fetchChat = async () => {
@@ -57,8 +70,6 @@ const Chat = () => {
 
     socket.connect();
 
-
-
     socket.on("connect", () => {
       console.log("✅ Connected", socket.id);
     });
@@ -68,7 +79,6 @@ const Chat = () => {
       console.log(err);
     });
 
-
     socket.emit("join-chat", {
       firstName: userDetail.firstName,
       firstUserId: userId,
@@ -76,8 +86,6 @@ const Chat = () => {
     });
 
     socket.on("new-message", ({ firstName, text }) => {
-      console.log(text);
-
       setMessages((prev) => [
         ...prev,
         {
@@ -85,6 +93,10 @@ const Chat = () => {
           text,
         },
       ]);
+    });
+
+    socket.on("typing-message", ({ firstName }) => {
+      setTypingUser(firstName);
     });
 
     return () => {
@@ -96,6 +108,7 @@ const Chat = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
       <div className="w-full max-w-md h-[550px] bg-base-100 rounded-2xl shadow-xl flex flex-col overflow-hidden">
+
         {/* Header */}
         <div className="bg-gray-600 text-white text-center py-4 font-semibold text-lg">
           Chat
@@ -112,17 +125,30 @@ const Chat = () => {
                   {msg.firstName + " " + msg.lastName}
                 </p>
 
-                <p className=" text-black">{msg.text}</p>
+                <p className="text-black">{msg.text}</p>
               </div>
             ))
           )}
         </div>
 
+        {/* Typing Indicator */}
+        {typingUser && (
+          <div className="px-4 pb-2 text-sm italic text-gray-500">
+            {typingUser} is typing...
+          </div>
+        )}
+
         {/* Input */}
         <div className="p-3 border-t flex gap-2">
           <input
             value={inputMsgVal}
-            onChange={(e) => setInputMsgVal(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+
+              setInputMsgVal(value);
+
+              typingMsg(value);
+            }}
             type="text"
             placeholder="Type a message..."
             className="flex-1 border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
