@@ -25,8 +25,16 @@ const Chat = () => {
       firstName: userDetail.firstName,
       toUserId,
       text: inputMsgVal,
+      lastName: userDetail.lastName
     });
 
+    socket.emit("stop-typing", {
+      _id: userId,
+      firstName: userDetail.firstName,
+      toUserId,
+    });
+
+    setTypingUser("");
     setInputMsgVal("");
   };
 
@@ -85,12 +93,13 @@ const Chat = () => {
       toUserId,
     });
 
-    socket.on("new-message", ({ firstName, text }) => {
+    socket.on("new-message", ({ firstName, text, lastName }) => {
       setMessages((prev) => [
         ...prev,
         {
           firstName,
           text,
+          lastName
         },
       ]);
     });
@@ -99,6 +108,10 @@ const Chat = () => {
       setTypingUser(firstName);
     });
 
+
+    socket.on("stop-typing", () => {
+      setTypingUser("");
+    });
     return () => {
       console.log("CLEANUP CHALA");
       socket.disconnect();
@@ -112,7 +125,16 @@ const Chat = () => {
         {/* Header */}
         <div className="bg-gray-600 text-white text-center py-4 font-semibold text-lg">
           Chat
+
+            {/* Typing Indicator */}
+        {typingUser && (
+          <div className="px-4 pb-2 text-sm italic text-black-500">
+            {typingUser} is typing...
+          </div>
+        )}
         </div>
+
+       
 
         {/* Messages */}
         <div className="flex-1 p-4 overflow-y-auto">
@@ -131,12 +153,7 @@ const Chat = () => {
           )}
         </div>
 
-        {/* Typing Indicator */}
-        {typingUser && (
-          <div className="px-4 pb-2 text-sm italic text-gray-500">
-            {typingUser} is typing...
-          </div>
-        )}
+       
 
         {/* Input */}
         <div className="p-3 border-t flex gap-2">
